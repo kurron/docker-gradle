@@ -11,8 +11,8 @@ ENV JDK_HOME /usr/lib/jvm/jdk1.8.0_31
 ENV JAVA_HOME /usr/lib/jvm/jdk1.8.0_31
 ENV PATH $PATH:$JAVA_HOME/bin
 
-# store Gradle temp files in the user's area
-#ENV GRADLE_USER_HOME /pwd
+# Specifies the Gradle user home directory (which defaults to “USER_HOME/.gradle” if not set).
+ENV GRADLE_USER_HOME /home
 
 # export meta-data about this container
 ENV KURRON_GRADLE_VERSION 2.2.1
@@ -28,4 +28,7 @@ WORKDIR /pwd
 # create a mount point where the source files will be
 VOLUME ["/pwd"]
 
-ENTRYPOINT ["/opt/gradle/gradlew", "--project-cache-dir", "/pwd/.gradle", "--project-dir", "/pwd", "--gradle-user-home", "/pwd", "--build-file", "/opt/gradle/build.gradle"]
+# create a mount point to the user's home directory
+VOLUME ["/home"]
+
+ENTRYPOINT ["/opt/gradle/gradlew", "--project-cache-dir", "/pwd/.gradle", "--project-dir", "/pwd", "--build-file", "/opt/gradle/build.gradle"]
