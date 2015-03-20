@@ -7,7 +7,7 @@ FROM kurron/docker-oracle-jdk-8:latest
 MAINTAINER Ron Kurr <kurr@kurron.org>
 
 # Specifies the Gradle user home directory (which defaults to “USER_HOME/.gradle” if not set).
-ENV GRADLE_USER_HOME /home
+#ENV GRADLE_USER_HOME /home
 
 # export meta-data about this container
 ENV KURRON_GRADLE_VERSION 2.3
@@ -25,4 +25,5 @@ WORKDIR /pwd
 # create a mount point to the user's home directory
 VOLUME ["/home"]
 
-ENTRYPOINT ["/opt/gradle/gradlew", "--project-cache-dir", "/pwd/.gradle", "--project-dir", "/pwd"]
+#ENTRYPOINT ["/opt/gradle/gradlew", "--project-cache-dir", "/pwd/.gradle", "--project-dir", "/pwd"]
+ENTRYPOINT ["/opt/gradle/gradlew"]

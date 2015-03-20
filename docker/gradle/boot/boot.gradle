@@ -1,20 +1,8 @@
-buildscript {
-    ext {
-        springBootVersion = '${springBootVersion}'
-    }
-    repositories {
-        jcenter()
-    }
-    dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-    }
-}
+apply plugin: 'spring-boot'
 
 repositories {
     jcenter()
 }
-
-apply plugin: 'spring-boot'
 
 dependencies {
     testCompile "org.springframework.boot:spring-boot-starter-test:${springBootVersion}"

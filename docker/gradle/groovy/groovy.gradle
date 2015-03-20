@@ -1,8 +1,20 @@
 apply plugin: 'groovy'
 
+repositories {
+    maven {
+        name = 'kurron'
+        url = 'http://dl.bintray.com/kurron/maven'
+    }
+}
+
+dependencies {
+    compile "org.codehaus.groovy:groovy-all:${groovyVersion}:indy"
+    compile "org.kurron:tools-java:${toolsJavaVersion}"
+}
+
 compileGroovy {
     // TODO: provide override
-    groovyOptions.configurationScript = file( "$rootDir/gradle/groovyCompilerConfiguration.groovy" )
+    groovyOptions.configurationScript = file( "/opt/gradle/gradle/groovy/groovyCompilerConfiguration.groovy" )
 }
 
 compileGroovy.groovyOptions.optimizationOptions['indy'] = true
@@ -14,23 +26,23 @@ targetCompatibility = '1.8'
 compileGroovy.options*.compilerArgs = ['-Xlint:deprecation','-encoding', 'UTF-8']
 compileTestGroovy.options*.compilerArgs = ['-Xlint:deprecation','-encoding', 'UTF-8']
 
-groovydoc {
-    docTitle = "docTitle: $project.name $version"
-    footer = "footer: $project.name $version"
-    header = "header: $project.name $version"
-    windowTitle = "windowTitle: $project.name $version"
-    includePrivate = false
-    overview = 'overview.html'
-    use = true
-}
-
 test {
+    maxParallelForks = Runtime.runtime.availableProcessors()
+    scanForTestClasses = false
+    includes = []
+    excludes = ['**/*.class']
+    beforeTest { descriptor ->
+        logger.lifecycle( "Running test: ${descriptor}" )
+    }
     useJUnit {
-        includeCategories 'org.kurron.categories.UnitTest'
+        includeCategories = ['org.kurron.categories.UnitTest']
     }
     testLogging {
-        showStandardStreams = false
+        showStandardStreams = true
         exceptionFormat = 'full'
     }
     reports.html.destination =  "$buildDir/reports/unitTests"
 }
+
+// force Spock usage
+apply from: "/opt/gradle/gradle/testing/spock.gradle"
