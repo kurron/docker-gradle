@@ -1,0 +1,36 @@
+apply plugin: 'groovy'
+
+compileGroovy {
+    // TODO: provide override
+    groovyOptions.configurationScript = file( "$rootDir/gradle/groovyCompilerConfiguration.groovy" )
+}
+
+compileGroovy.groovyOptions.optimizationOptions['indy'] = true
+compileTestGroovy.groovyOptions.optimizationOptions['indy'] = true
+
+sourceCompatibility = '1.8'
+targetCompatibility = '1.8'
+
+compileGroovy.options*.compilerArgs = ['-Xlint:deprecation','-encoding', 'UTF-8']
+compileTestGroovy.options*.compilerArgs = ['-Xlint:deprecation','-encoding', 'UTF-8']
+
+groovydoc {
+    docTitle = "docTitle: $project.name $version"
+    footer = "footer: $project.name $version"
+    header = "header: $project.name $version"
+    windowTitle = "windowTitle: $project.name $version"
+    includePrivate = false
+    overview = 'overview.html'
+    use = true
+}
+
+test {
+    useJUnit {
+        includeCategories 'org.kurron.categories.UnitTest'
+    }
+    testLogging {
+        showStandardStreams = false
+        exceptionFormat = 'full'
+    }
+    reports.html.destination =  "$buildDir/reports/unitTests"
+}
