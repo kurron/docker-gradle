@@ -29,13 +29,11 @@ compileTestGroovy.options*.compilerArgs = ['-Xlint:deprecation','-encoding', 'UT
 test {
     maxParallelForks = Runtime.runtime.availableProcessors()
     scanForTestClasses = false
-    includes = []
-    excludes = ['**/*.class']
     beforeTest { descriptor ->
         logger.lifecycle( "Running test: ${descriptor}" )
     }
     useJUnit {
-        includeCategories = ['org.kurron.categories.UnitTest']
+        includeCategories 'org.kurron.categories.UnitTest'
     }
     testLogging {
         showStandardStreams = true
@@ -44,5 +42,24 @@ test {
     reports.html.destination =  "$buildDir/reports/unitTests"
 }
 
+task componentTest( type: Test ) {
+    dependsOn = [classes, testClasses] 
+    group = 'Verification'
+    description = 'Runs the component-level tests.'
+    maxParallelForks = Runtime.runtime.availableProcessors()
+    scanForTestClasses = false
+    beforeTest { descriptor ->
+        logger.lifecycle( "Running test: ${descriptor}" )
+    }
+    useJUnit {
+        includeCategories 'org.kurron.categories.ComponentTest'
+    }
+    testLogging {
+        showStandardStreams = true
+        exceptionFormat = 'full'
+    }
+    reports.html.destination =  "$buildDir/reports/componentTests"
+}
+ 
 // force Spock usage
 apply from: "/opt/gradle/gradle/testing/spock.gradle"
