@@ -118,6 +118,24 @@ task endToEndTest( type: Test ) {
     reports.html.destination =  "$buildDir/reports/endToEndTests"
 }
 
+task acceptanceTest( type: Test ) {
+    dependsOn = [classes, testClasses]
+    group = 'Verification'
+    description = 'Runs the acceptance tests.'
+    maxParallelForks = Runtime.runtime.availableProcessors()
+    scanForTestClasses = false
+    // categories and cucumber tests don't play nicely -- no tests are detected and run
+    includes = ['**/**AcceptanceTest.class']
+    beforeTest { descriptor ->
+        logger.lifecycle( "Running test: ${descriptor}" )
+    }
+    testLogging {
+        showStandardStreams = true
+        exceptionFormat = 'full'
+    }
+    reports.html.destination =  "$buildDir/reports/acceptanceTests"
+}
+
 apply from: "/opt/gradle/gradle/testing/spock.gradle"
 apply from: "/opt/gradle/gradle/testing/jacoco.gradle"
 apply from: "/opt/gradle/gradle/testing/cucumber-jvm-groovy.gradle"
