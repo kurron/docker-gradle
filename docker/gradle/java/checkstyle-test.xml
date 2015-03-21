@@ -73,7 +73,9 @@
         <module name="IllegalToken"/>
         <module name="IllegalTokenText"/>
         <module name="IllegalType"/>
+<!--
         <module name="ImportControl"/>
+-->
         <module name="ImportOrder"/>
         <module name="Indentation"/>
         <module name="InnerAssignment"/>
@@ -81,7 +83,9 @@
         <module name="InterfaceIsType"/>
         <module name="InterfaceTypeParameterName"/>
         <module name="JavaNCSS"/>
+<!--
         <module name="JavadocMethod"/>
+-->
         <module name="JavadocTagContinuationIndentation"/>
         <module name="JavadocParagraph"/>
         <module name="JavadocStyle"/>
@@ -98,7 +102,9 @@
         <module name="MethodName"/>
         <module name="MethodParamPad"/>
         <module name="MethodTypeParameterName"/>
+<!--
         <module name="MissingCtor"/>
+-->
         <module name="MissingDeprecated"/>
         <module name="MissingOverride"/>
         <module name="MissingSwitchDefault"/>

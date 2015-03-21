@@ -73,7 +73,9 @@
         <module name="IllegalToken"/>
         <module name="IllegalTokenText"/>
         <module name="IllegalType"/>
+<!--
         <module name="ImportControl"/>
+-->
         <module name="ImportOrder"/>
         <module name="Indentation"/>
         <module name="InnerAssignment"/>
