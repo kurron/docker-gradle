@@ -119,4 +119,5 @@ task endToEndTest( type: Test ) {
 }
 
 apply from: "/opt/gradle/gradle/testing/spock.gradle"
+apply from: "/opt/gradle/gradle/testing/jacoco.gradle"
 apply from: "/opt/gradle/gradle/groovy/codenarc.gradle"

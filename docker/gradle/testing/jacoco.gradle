@@ -12,9 +12,6 @@ jacocoTestReport {
     }
 }
 
-/*
- * Copyright (c) 2015 Transparent Language.  All rights reserved.
- */
 // Since the JaCoCo plug in does not honor excludes or break the build if coverage thresholds are crossed, we have to do it by hand.
 task verifyCodeCoverage( dependsOn: 'jacocoTestReport' ) {
     description = 'Parses the generated JaCoCo xml report, and determines if sufficient coverage is present.'
@@ -32,7 +29,7 @@ task verifyCodeCoverage( dependsOn: 'jacocoTestReport' ) {
             def jacocoExclude = coverageExcludes ? coverageExcludes : []
             jacocoExclude.each { logger.info "Excluding ${it} from code coverage check." }
             def filtered = xml.package.class.findAll { clazz -> !jacocoExclude.any { clazz.@name.contains( it ) } }
-            def instructions = filtered.collect{ it.counter }.flatten().findAll{ it.@type == 'INSTRUCTION' }.flatten()
+            def instructions = filtered.collect{ it.counter }.flatten().findAll{ it.@type == 'METHOD' }.flatten()
             def offenders = instructions.findAll { (it.@missed as int) >= (it.@covered as int) }.collect { it.parent().attributes().name }
             if ( offenders ) {
                 offenders.each { logger.error "Insufficient code coverage: ${it}" }
