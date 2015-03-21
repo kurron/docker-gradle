@@ -28,7 +28,7 @@ compileTestGroovy.options*.compilerArgs = ['-Xlint:deprecation','-encoding', 'UT
 
 test {
     maxParallelForks = Runtime.runtime.availableProcessors()
-    scanForTestClasses = false
+    scanForTestClasses = true
     beforeTest { descriptor ->
         logger.lifecycle( "Running test: ${descriptor}" )
     }
@@ -47,7 +47,7 @@ task componentTest( type: Test ) {
     group = 'Verification'
     description = 'Runs the component-level tests.'
     maxParallelForks = Runtime.runtime.availableProcessors()
-    scanForTestClasses = false
+    scanForTestClasses = true
     beforeTest { descriptor ->
         logger.lifecycle( "Running test: ${descriptor}" )
     }
@@ -66,7 +66,7 @@ task outboundIntegrationTest( type: Test ) {
     group = 'Verification'
     description = 'Runs the outbound gateway integration tests.'
     maxParallelForks = Runtime.runtime.availableProcessors()
-    scanForTestClasses = false
+    scanForTestClasses = true
     beforeTest { descriptor ->
         logger.lifecycle( "Running test: ${descriptor}" )
     }
@@ -85,7 +85,7 @@ task inboundIntegrationTest( type: Test ) {
     group = 'Verification'
     description = 'Runs the inbound gateway integration tests.'
     maxParallelForks = Runtime.runtime.availableProcessors()
-    scanForTestClasses = false
+    scanForTestClasses = true
     beforeTest { descriptor ->
         logger.lifecycle( "Running test: ${descriptor}" )
     }
@@ -104,7 +104,7 @@ task endToEndTest( type: Test ) {
     group = 'Verification'
     description = 'Runs the end-to-end tests.'
     maxParallelForks = Runtime.runtime.availableProcessors()
-    scanForTestClasses = false
+    scanForTestClasses = true
     beforeTest { descriptor ->
         logger.lifecycle( "Running test: ${descriptor}" )
     }
@@ -133,7 +133,7 @@ task acceptanceTest( type: Test ) {
         showStandardStreams = true
         exceptionFormat = 'full'
     }
-    reports.html.destination =  "$buildDir/reports/acceptanceTests"
+    // the Cucumber annotation dictates the name and location of the report file
 }
 
 apply from: "/opt/gradle/gradle/testing/spock.gradle"
