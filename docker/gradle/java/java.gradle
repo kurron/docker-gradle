@@ -1,0 +1,112 @@
+apply plugin: 'java'
+
+repositories {
+    maven {
+        name = 'kurron'
+        url = 'http://dl.bintray.com/kurron/maven'
+    }
+}
+
+dependencies {
+    compile "org.kurron:tools-java:${toolsJavaVersion}"
+}
+
+sourceCompatibility = '1.8'
+targetCompatibility = '1.8'
+
+compileJava.options*.compilerArgs = ['-Xlint:deprecation','-encoding', 'UTF-8']
+compileTestJava.options*.compilerArgs = ['-Xlint:deprecation','-encoding', 'UTF-8']
+
+test {
+    maxParallelForks = Runtime.runtime.availableProcessors()
+    scanForTestClasses = false
+    beforeTest { descriptor ->
+        logger.lifecycle( "Running test: ${descriptor}" )
+    }
+    useJUnit {
+        includeCategories 'org.kurron.categories.UnitTest'
+    }
+    testLogging {
+        showStandardStreams = true
+        exceptionFormat = 'full'
+    }
+    reports.html.destination =  "$buildDir/reports/unitTests"
+}
+
+task componentTest( type: Test ) {
+    dependsOn = [classes, testClasses] 
+    group = 'Verification'
+    description = 'Runs the component-level tests.'
+    maxParallelForks = Runtime.runtime.availableProcessors()
+    scanForTestClasses = false
+    beforeTest { descriptor ->
+        logger.lifecycle( "Running test: ${descriptor}" )
+    }
+    useJUnit {
+        includeCategories 'org.kurron.categories.ComponentTest'
+    }
+    testLogging {
+        showStandardStreams = true
+        exceptionFormat = 'full'
+    }
+    reports.html.destination =  "$buildDir/reports/componentTests"
+}
+ 
+task outboundIntegrationTest( type: Test ) {
+    dependsOn = [classes, testClasses]
+    group = 'Verification'
+    description = 'Runs the outbound gateway integration tests.'
+    maxParallelForks = Runtime.runtime.availableProcessors()
+    scanForTestClasses = false
+    beforeTest { descriptor ->
+        logger.lifecycle( "Running test: ${descriptor}" )
+    }
+    useJUnit {
+        includeCategories 'org.kurron.categories.OutboundIntegrationTest'
+    }
+    testLogging {
+        showStandardStreams = true
+        exceptionFormat = 'full'
+    }
+    reports.html.destination =  "$buildDir/reports/outboundIntegrationTests"
+}
+
+task inboundIntegrationTest( type: Test ) {
+    dependsOn = [classes, testClasses]
+    group = 'Verification'
+    description = 'Runs the inbound gateway integration tests.'
+    maxParallelForks = Runtime.runtime.availableProcessors()
+    scanForTestClasses = false
+    beforeTest { descriptor ->
+        logger.lifecycle( "Running test: ${descriptor}" )
+    }
+    useJUnit {
+        includeCategories 'org.kurron.categories.InboundIntegrationTest'
+    }
+    testLogging {
+        showStandardStreams = true
+        exceptionFormat = 'full'
+    }
+    reports.html.destination =  "$buildDir/reports/inboundIntegrationTests"
+}
+
+task endToEndTest( type: Test ) {
+    dependsOn = [classes, testClasses]
+    group = 'Verification'
+    description = 'Runs the end-to-end tests.'
+    maxParallelForks = Runtime.runtime.availableProcessors()
+    scanForTestClasses = false
+    beforeTest { descriptor ->
+        logger.lifecycle( "Running test: ${descriptor}" )
+    }
+    useJUnit {
+        includeCategories 'org.kurron.categories.EndToEndTest'
+    }
+    testLogging {
+        showStandardStreams = true
+        exceptionFormat = 'full'
+    }
+    reports.html.destination =  "$buildDir/reports/endToEndTests"
+}
+
+apply from: "/opt/gradle/gradle/testing/jacoco.gradle"
