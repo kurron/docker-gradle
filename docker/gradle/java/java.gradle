@@ -110,3 +110,4 @@ task endToEndTest( type: Test ) {
 }
 
 apply from: "/opt/gradle/gradle/testing/jacoco.gradle"
+apply from: "/opt/gradle/gradle/java/checkstyle.gradle"
