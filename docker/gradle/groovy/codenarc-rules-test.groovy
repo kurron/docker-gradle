@@ -1,6 +1,3 @@
-/*
- * Copyright (c) 2015 Transparent Language.  All rights reserved.
- */
 ruleset {
 
     description '''
@@ -336,9 +333,7 @@ ruleset {
     SerializableClassMustDefineSerialVersionUID 
     
     // rulesets/size.xml
-    AbcMetric   // Requires the GMetrics jar
     ClassSize 
-    CrapMetric   // Requires the GMetrics jar and a Cobertura coverage file
     CyclomaticComplexity   // Requires the GMetrics jar
     MethodCount 
     MethodSize 

@@ -1,5 +1,9 @@
 apply plugin: 'codenarc'
 
+dependencies {
+    compile "org.gmetrics:GMetrics:${gmetricsVersion}" 
+}
+
 codenarc {
     toolVersion = codenarcVersion
     ignoreFailures = false
