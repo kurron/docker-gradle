@@ -80,5 +80,24 @@ task outboundIntegrationTest( type: Test ) {
     reports.html.destination =  "$buildDir/reports/outboundIntegrationTests"
 }
 
+task inboundIntegrationTest( type: Test ) {
+    dependsOn = [classes, testClasses]
+    group = 'Verification'
+    description = 'Runs the inbound gateway integration tests.'
+    maxParallelForks = Runtime.runtime.availableProcessors()
+    scanForTestClasses = false
+    beforeTest { descriptor ->
+        logger.lifecycle( "Running test: ${descriptor}" )
+    }
+    useJUnit {
+        includeCategories 'org.kurron.categories.InboundIntegrationTest'
+    }
+    testLogging {
+        showStandardStreams = true
+        exceptionFormat = 'full'
+    }
+    reports.html.destination =  "$buildDir/reports/inboundIntegrationTests"
+}
+
 // force Spock usage
 apply from: "/opt/gradle/gradle/testing/spock.gradle"
