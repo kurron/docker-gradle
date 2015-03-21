@@ -2,10 +2,12 @@ apply plugin: 'codenarc'
 
 dependencies {
     compile "org.gmetrics:GMetrics:${gmetricsVersion}" 
+    codenarc "org.codenarc:CodeNarc:${codenarcVersion}"
+    codenarc "org.codehaus.groovy:groovy-all:${groovyVersion}:indy"
 }
 
 codenarc {
-    toolVersion = codenarcVersion
+//  toolVersion = codenarcVersion
     ignoreFailures = false
     codenarcMain {
         enabled = true
