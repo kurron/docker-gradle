@@ -99,5 +99,24 @@ task inboundIntegrationTest( type: Test ) {
     reports.html.destination =  "$buildDir/reports/inboundIntegrationTests"
 }
 
+task endToEndTest( type: Test ) {
+    dependsOn = [classes, testClasses]
+    group = 'Verification'
+    description = 'Runs the end-to-end tests.'
+    maxParallelForks = Runtime.runtime.availableProcessors()
+    scanForTestClasses = false
+    beforeTest { descriptor ->
+        logger.lifecycle( "Running test: ${descriptor}" )
+    }
+    useJUnit {
+        includeCategories 'org.kurron.categories.EndToEndTest'
+    }
+    testLogging {
+        showStandardStreams = true
+        exceptionFormat = 'full'
+    }
+    reports.html.destination =  "$buildDir/reports/endToEndTests"
+}
+
 // force Spock usage
 apply from: "/opt/gradle/gradle/testing/spock.gradle"
