@@ -118,5 +118,5 @@ task endToEndTest( type: Test ) {
     reports.html.destination =  "$buildDir/reports/endToEndTests"
 }
 
-// force Spock usage
 apply from: "/opt/gradle/gradle/testing/spock.gradle"
+apply from: "/opt/gradle/gradle/groovy/codenarc.gradle"
