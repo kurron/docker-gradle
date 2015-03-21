@@ -19,7 +19,7 @@ compileTestJava.options*.compilerArgs = ['-Xlint:deprecation','-encoding', 'UTF-
 
 test {
     maxParallelForks = Runtime.runtime.availableProcessors()
-    scanForTestClasses = false
+    scanForTestClasses = true
     beforeTest { descriptor ->
         logger.lifecycle( "Running test: ${descriptor}" )
     }
@@ -38,7 +38,7 @@ task componentTest( type: Test ) {
     group = 'Verification'
     description = 'Runs the component-level tests.'
     maxParallelForks = Runtime.runtime.availableProcessors()
-    scanForTestClasses = false
+    scanForTestClasses = true
     beforeTest { descriptor ->
         logger.lifecycle( "Running test: ${descriptor}" )
     }
@@ -57,7 +57,7 @@ task outboundIntegrationTest( type: Test ) {
     group = 'Verification'
     description = 'Runs the outbound gateway integration tests.'
     maxParallelForks = Runtime.runtime.availableProcessors()
-    scanForTestClasses = false
+    scanForTestClasses = true
     beforeTest { descriptor ->
         logger.lifecycle( "Running test: ${descriptor}" )
     }
@@ -76,7 +76,7 @@ task inboundIntegrationTest( type: Test ) {
     group = 'Verification'
     description = 'Runs the inbound gateway integration tests.'
     maxParallelForks = Runtime.runtime.availableProcessors()
-    scanForTestClasses = false
+    scanForTestClasses = true
     beforeTest { descriptor ->
         logger.lifecycle( "Running test: ${descriptor}" )
     }
@@ -95,7 +95,7 @@ task endToEndTest( type: Test ) {
     group = 'Verification'
     description = 'Runs the end-to-end tests.'
     maxParallelForks = Runtime.runtime.availableProcessors()
-    scanForTestClasses = false
+    scanForTestClasses = true
     beforeTest { descriptor ->
         logger.lifecycle( "Running test: ${descriptor}" )
     }
@@ -107,6 +107,24 @@ task endToEndTest( type: Test ) {
         exceptionFormat = 'full'
     }
     reports.html.destination =  "$buildDir/reports/endToEndTests"
+}
+
+task acceptanceTest( type: Test ) {
+    dependsOn = [classes, testClasses]
+    group = 'Verification'
+    description = 'Runs the acceptance tests.'
+    maxParallelForks = Runtime.runtime.availableProcessors()
+    scanForTestClasses = false
+    // categories and cucumber tests don't play nicely -- no tests are detected and run
+    includes = ['**/**AcceptanceTest.class']
+    beforeTest { descriptor ->
+        logger.lifecycle( "Running test: ${descriptor}" )
+    }
+    testLogging {
+        showStandardStreams = true
+        exceptionFormat = 'full'
+    }
+    // the Cucumber annotation dictates the name and location of the report file
 }
 
 apply from: "/opt/gradle/gradle/testing/jacoco.gradle"
