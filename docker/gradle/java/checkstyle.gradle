@@ -1,20 +1,23 @@
 apply plugin: 'checkstyle'
 
+// file( "${rootDir}/overrides/codenarc-rules.groovy" )
+
 checkstyle {
     ignoreFailures = false
     toolVersion = checkstyleVersion 
     checkstyleMain {
         enabled = true
         showViolations = true
-        //TODO: provide overrides
-        configFile = file( "/opt/gradle/gradle/java/checkstyle.xml" )
+        configFile = file( "${rootDir}/overrides/checkstyle.xml" ).exists() ? file( "${rootDir}/overrides/checkstyle.xml" ) : file( "/opt/gradle/gradle/java/checkstyle.xml" )
         configProperties = [suppressionDirectory: projectDir.path] 
     }
     checkstyleTest {
         enabled = true
         showViolations = true
-        //TODO: provide overrides
-        configFile = file( "/opt/gradle/gradle/java/checkstyle-test.xml" )
+        configFile = file( "${rootDir}/overrides/checkstyle-test.xml" ).exists() ? file( "${rootDir}/overrides/checkstyle-test.xml" ) : file( "/opt/gradle/gradle/java/checkstyle-test.xml" )
         configProperties = [suppressionDirectory: projectDir.path]
     }
 }
+
+logger.quiet "checkstyleMain.configFile = ${checkstyleMain.configFile}"
+logger.quiet "checkstyleTest.configFile = ${checkstyleTest.configFile}"

@@ -22,5 +22,5 @@ codenarc {
     }
 }
 
-logger.quiet "codenarc.codenarcMain.configFile = ${codenarcMain.configFile}"
-logger.quiet "codenarc.codenarcTest.configFile = ${codenarcTest.configFile}"
+logger.quiet "codenarcMain.configFile = ${codenarcMain.configFile}"
+logger.quiet "codenarcTest.configFile = ${codenarcMain.configFile}"
