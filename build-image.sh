@@ -1,2 +1,2 @@
 #!/bin/bash
-docker build --tag="kurron/gradle" docker
+docker build --tag="kurron/gradle" .
