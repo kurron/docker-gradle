@@ -13,9 +13,10 @@ dependencies {
 }
 
 compileGroovy {
-    // TODO: provide override
-    groovyOptions.configurationScript = file( "/opt/gradle/gradle/groovy/groovyCompilerConfiguration.groovy" )
+    groovyOptions.configurationScript = file( "${rootDir}/overrides/groovyCompilerConfiguration.groovy" ).exists() ? file( "${rootDir}/overrides/groovyCompilerConfiguration.groovy" ) : file( "/opt/gradle/gradle/groovy/groovyCompilerConfiguration.groovy" )
 }
+
+logger.quiet "compileGroovy.groovyOptions.configurationScript = ${compileGroovy.groovyOptions.configurationScript}"
 
 compileGroovy.groovyOptions.optimizationOptions['indy'] = true
 compileTestGroovy.groovyOptions.optimizationOptions['indy'] = true

@@ -14,13 +14,13 @@ codenarc {
     ignoreFailures = false
     codenarcMain {
         enabled = true
-        configFile = file( "${rootDir}/overrides/codenarc-rules.groovy" ) ?: file( "/opt/gradle/gradle/groovy/codenarc-rules.groovy" )
+        configFile = file( "${rootDir}/overrides/codenarc-rules.groovy" ).exists() ? file( "${rootDir}/overrides/codenarc-rules.groovy" ) : file( "/opt/gradle/gradle/groovy/codenarc-rules.groovy" )
     }
     codenarcTest {
         enabled = true
-        configFile = file( "${rootDir}/overrides/codenarc-rules-test.groovy" ) ?: file( "/opt/gradle/gradle/groovy/codenarc-rules-test.groovy" )
+        configFile = file( "${rootDir}/overrides/codenarc-rules-test.groovy" ).exists() ? file( "${rootDir}/overrides/codenarc-rules-test.groovy" ) : file( "/opt/gradle/gradle/groovy/codenarc-rules-test.groovy" )
     }
 }
 
-// logger.quiet "codenarc.codenarcMain.configFile = ${codenarcMain.configFile}"
-// logger.quiet "codenarc.codenarcTest.configFile = ${codenarcTest.configFile}"
+logger.quiet "codenarc.codenarcMain.configFile = ${codenarcMain.configFile}"
+logger.quiet "codenarc.codenarcTest.configFile = ${codenarcTest.configFile}"
